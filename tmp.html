@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+Name:<input data-bind="name" type="text">
+<span data-bind="name"></span>
+<hr/>
+<hr/>
+<h1>console</h1>
+<div id="console">
+
+</div>
+<script>
+  let app={}
+
+  function f (){
+
+    let elements = document.querySelectorAll('[data-bind]');
+    elements.forEach(ele=>{
+      if(ele.type){
+        log(ele.type)
+        ele.onkeyup=()=>{
+          app[ele.getAttribute('data-bind')]=ele.value
+        }
+      }
+    })
+    // elements.forEach(ele=>{
+    //   log(ele.type)
+    //   let propVal=ele.getAttribute('data-bind')
+    //   Object.defineProperty(app,propVal,{
+    //     set: function (newVal){
+    //       elements.forEach(e=>{
+    //         if (e.getAttribute("data-bind") === propVal) {
+    //         }
+    //         if(!e.type){
+    //           e.innerHTML=newVal
+    //         }
+    //       })
+    //     }
+    //   })
+    // })
+  }
+
+  f()
+  function log(str){
+    console.log(str)
+    let ele = document.createElement("p");
+    ele.innerText=str
+    document.getElementById("console").append(ele)
+  }
+</script>
+</body>
+</html>
