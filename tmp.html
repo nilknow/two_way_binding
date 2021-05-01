@@ -14,46 +14,47 @@ Name:<input data-bind="name" type="text">
 
 </div>
 <script>
-  let app={}
+    let app = {}
 
-  function f (){
+    function f() {
 
-    let elements = document.querySelectorAll('[data-bind]');
-    //element change invoke data change
-    elements.forEach(ele=>{
-      if(ele.type){
-        log(ele.type)
-        ele.onkeyup=()=>{
-          app[ele.getAttribute('data-bind')]=ele.value
-        }
-      }
-    })
-
-    //data change invoke element change
-    elements.forEach(ele=>{
-      if(ele.type){
-          return
-      }
-      let propVal=ele.getAttribute('data-bind')
-      Object.defineProperty(app,propVal,{
-        set: function (newVal){
-          elements.forEach(e=>{
-            if (e.getAttribute("data-bind") === propVal) {
-                e.innerHTML = newVal
+        let elements = document.querySelectorAll('[data-bind]');
+        //element change invoke data change
+        elements.forEach(ele => {
+            if (ele.type) {
+                log(ele.type)
+                ele.onkeyup = () => {
+                    app[ele.getAttribute('data-bind')] = ele.value
+                }
             }
-          })
-        }
-      })
-    })
-  }
+        })
 
-  f()
-  function log(str){
-    console.log(str)
-    let ele = document.createElement("p");
-    ele.innerText=str
-    document.getElementById("console").append(ele)
-  }
+        //data change invoke element change
+        elements.forEach(ele => {
+            if (ele.type) {
+                return
+            }
+            let propVal = ele.getAttribute('data-bind')
+            Object.defineProperty(app, propVal, {
+                set: function (newVal) {
+                    elements.forEach(e => {
+                        if (e.getAttribute("data-bind") === propVal) {
+                            e.innerHTML = newVal
+                        }
+                    })
+                }
+            })
+        })
+    }
+
+    f()
+
+    function log(str) {
+        console.log(str)
+        let ele = document.createElement("p");
+        ele.innerText = str
+        document.getElementById("console").append(ele)
+    }
 </script>
 </body>
 </html>
