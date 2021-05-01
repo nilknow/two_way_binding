@@ -34,11 +34,14 @@ Name:<input data-bind="name" type="text">
             if (ele.type) {
                 return
             }
-            let propVal = ele.getAttribute('data-bind')
-            Object.defineProperty(app, propVal, {
+            let prop = ele.getAttribute('data-bind')
+            Object.defineProperty(app, prop, {
+                get: function(){
+                    return app[ele.getAttribute('data-bind')]
+                },
                 set: function (newVal) {
                     elements.forEach(e => {
-                        if (e.getAttribute("data-bind") === propVal) {
+                        if (e.getAttribute("data-bind") === prop) {
                             e.innerHTML = newVal
                         }
                     })
