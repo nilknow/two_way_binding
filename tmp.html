@@ -19,6 +19,7 @@ Name:<input data-bind="name" type="text">
   function f (){
 
     let elements = document.querySelectorAll('[data-bind]');
+    //element change invoke data change
     elements.forEach(ele=>{
       if(ele.type){
         log(ele.type)
@@ -27,21 +28,23 @@ Name:<input data-bind="name" type="text">
         }
       }
     })
-    // elements.forEach(ele=>{
-    //   log(ele.type)
-    //   let propVal=ele.getAttribute('data-bind')
-    //   Object.defineProperty(app,propVal,{
-    //     set: function (newVal){
-    //       elements.forEach(e=>{
-    //         if (e.getAttribute("data-bind") === propVal) {
-    //         }
-    //         if(!e.type){
-    //           e.innerHTML=newVal
-    //         }
-    //       })
-    //     }
-    //   })
-    // })
+
+    //data change invoke element change
+    elements.forEach(ele=>{
+      if(ele.type){
+          return
+      }
+      let propVal=ele.getAttribute('data-bind')
+      Object.defineProperty(app,propVal,{
+        set: function (newVal){
+          elements.forEach(e=>{
+            if (e.getAttribute("data-bind") === propVal) {
+                e.innerHTML = newVal
+            }
+          })
+        }
+      })
+    })
   }
 
   f()
